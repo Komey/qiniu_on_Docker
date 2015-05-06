@@ -8,20 +8,20 @@ RUN cp /etc/apt/sources.list /etc/apt/sources.list.backup
 RUN rm /etc/apt/sources.list
 RUN touch /etc/apt/sources.list
 
-#RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty-backports main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse" > /etc/apt/sources.list
-#RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty-backports main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb http://mirrors.sohu.com/ubuntu/ trusty-backports main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty-security main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty-updates main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty-proposed main restricted universe multiverse" > /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.sohu.com/ubuntu/ trusty-backports main restricted universe multiverse" > /etc/apt/sources.list
 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y build-essential git
+#RUN apt-get install -y build-essential git
 RUN apt-get install -y python python-dev python-setuptools
 RUN apt-get install -y nginx supervisor
 RUN easy_install pip
