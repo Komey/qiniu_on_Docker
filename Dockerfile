@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:precise
 
 MAINTAINER Komey <lmh5257@live.cn>
 
