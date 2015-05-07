@@ -1,23 +1,52 @@
-FROM debian:jessie
+# Copyright 2013 Thatcher Peskens
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-MAINTAINER Komey <lmh5257@live.cn>
+from ubuntu:precise
 
-RUN (echo "deb http://http.debian.net/debian/ jessie main contrib non-free" > /etc/apt/sources.list && echo "deb http://http.debian.net/debian/ jessie-updates main contrib non-free" >> /etc/apt/sources.list && echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list)
-RUN apt-get update
+maintainer Dockerfiles
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git python python-dev python-setuptools nginx sqlite3 supervisor
-RUN easy_install pip
-RUN pip install uwsgi
+run echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+run apt-get update
+run apt-get install -y build-essential git
+run apt-get install -y python python-dev python-setuptools
+run apt-get install -y nginx supervisor
+run easy_install pip
 
-ADD . /opt/django/
+# install uwsgi now because it takes a little while
+run pip install uwsgi
 
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-RUN rm /etc/nginx/sites-enabled/default
-RUN ln -s /opt/django/django.conf /etc/nginx/sites-enabled/
-RUN ln -s /opt/django/supervisord.conf /etc/supervisor/conf.d/
+# install nginx
+run apt-get install -y python-software-properties
+run apt-get update
+RUN add-apt-repository -y ppa:nginx/stable
+run apt-get install -y sqlite3
 
-RUN pip install -r /opt/django/app/requirements.txt
+# install our code
+add . /home/docker/code/
 
-VOLUME ["/opt/django/app"]
-EXPOSE 80
-CMD ["/opt/django/run.sh"]
+# setup all the configfiles
+run echo "daemon off;" >> /etc/nginx/nginx.conf
+run rm /etc/nginx/sites-enabled/default
+run ln -s /home/docker/code/nginx-app.conf /etc/nginx/sites-enabled/
+run ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
+
+# run pip install
+run pip install -r /home/docker/code/app/requirements.txt
+
+# install django, normally you would remove this step because your project would already
+# be installed in the code/app/ directory
+run django-admin.py startproject website /home/docker/code/app/ 
+
+expose 80
+cmd ["supervisord", "-n"]

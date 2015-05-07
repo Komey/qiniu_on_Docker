@@ -1,16 +1,31 @@
-mbentley/django-uwsgi-nginx
-==================
+# Django, uWSGI and Nginx in a container
 
-docker image for django (uwsgi) & nginx
-based off of stackbrew/debian:jessie
+This Dockerfile allows you to build a Docker container with a fairly standard
+and speedy setup for Django with uWSGI and Nginx.
 
-To pull this image:
-`docker pull mbentley/django-uwsgi-nginx`
+uWSGI from a number of benchmarks has shown to be the fastest server 
+for python applications and allows lots of flexibility.
 
-Example usage:
-`docker run -p 80 -d -e MODULE=myapp mbentley/django-uwsgi-nginx`
+Nginx has become the standard for serving up web applications and has the 
+additional benefit that it can talk to uWSGI using the uWSGI protocol, further
+elinimating overhead. 
 
-You can mount the application volume to run a specific application.  The default volume inside in the container is `/opt/django/app`.  Here is an example:
-`docker run -p 80 -d -e MODULE=myapp -v /home/mbentley/myapp:/opt/django/app mbentley/django-uwsgi-nginx`
+Most of this setup comes from the excellent tutorial on 
+https://uwsgi.readthedocs.org/en/latest/tutorials/Django_and_nginx.html
 
-By default, this just runs a default 'welcome to django' project.
+Feel free to clone this and modify it to your liking. And feel free to 
+contribute patches.
+
+### Build and run
+* docker build -t webapp .
+* docker run -d webapp
+
+### How to insert your application
+
+In /app currently a django project is created with startproject. You will
+probably want to replace the content of /app with the root of your django
+project.
+
+uWSGI chdirs to /app so in uwsgi.ini you will need to make sure the python path
+to the wsgi.py file is relative to that.
+
