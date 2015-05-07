@@ -23,6 +23,6 @@ run ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
 # run pip install
 run pip install -r /home/docker/code/app/requirements.txt
 
- 
+VOLUME ["/home/docker/code/app"]
 expose 80
-cmd ["supervisord", "-n"]
+cmd ["/home/docker/code/run.sh"]
