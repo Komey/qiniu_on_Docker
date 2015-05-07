@@ -1,8 +1,6 @@
-FROM ubuntu
-
-MAINTAINER Komey <lmh5257@live.cn>
-
-
+FROM debian:jessie
+MAINTAINER Matt Bentley <mbentley@mbentley.net>
+RUN (echo "deb http://http.debian.net/debian/ jessie main contrib non-free" > /etc/apt/sources.list && echo "deb http://http.debian.net/debian/ jessie-updates main contrib non-free" >> /etc/apt/sources.list && echo "deb http://security.debian.org/ jessie/updates main contrib non-free" >> /etc/apt/sources.list)
 RUN apt-get update
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git python python-dev python-setuptools nginx sqlite3 supervisor
