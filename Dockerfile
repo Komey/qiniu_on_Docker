@@ -1,39 +1,23 @@
-FROM ubuntu:precise
+FROM ubuntu
 
 MAINTAINER Komey <lmh5257@live.cn>
 
 
-run echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-run apt-get update
-run apt-get install -y build-essential git
-run apt-get install -y python python-dev python-setuptools
-run apt-get install -y nginx supervisor
-run easy_install pip
+RUN apt-get update
 
-# install uwsgi now because it takes a little while
-run pip install uwsgi
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git python python-dev python-setuptools nginx sqlite3 supervisor
+RUN easy_install pip
+RUN pip install uwsgi
 
-# install nginx
-run apt-get install -y python-software-properties
-run apt-get update
-RUN add-apt-repository -y ppa:nginx/stable
-run apt-get install -y sqlite3
+ADD . /opt/django/
 
-# install our code
-add . /home/docker/code/
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN rm /etc/nginx/sites-enabled/default
+RUN ln -s /opt/django/django.conf /etc/nginx/sites-enabled/
+RUN ln -s /opt/django/supervisord.conf /etc/supervisor/conf.d/
 
-# setup all the configfiles
-run echo "daemon off;" >> /etc/nginx/nginx.conf
-run rm /etc/nginx/sites-enabled/default
-run ln -s /home/docker/code/nginx-app.conf /etc/nginx/sites-enabled/
-run ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
+RUN pip install -r /opt/django/app/requirements.txt
 
-# run pip install
-run pip install -r /home/docker/code/app/requirements.txt
-
-# install django, normally you would remove this step because your project would already
-# be installed in the code/app/ directory
-run django-admin.py startproject website /home/docker/code/app/ 
-
-expose 80
-cmd ["supervisord", "-n"]
+VOLUME ["/opt/django/app"]
+EXPOSE 80
+CMD ["/opt/django/run.sh"]
