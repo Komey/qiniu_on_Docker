@@ -1,5 +1,3 @@
-
-
 from ubuntu
 
 maintainer Komey <lmh5257@live.cn>
@@ -7,7 +5,7 @@ maintainer Komey <lmh5257@live.cn>
 
 RUN apt-get update
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential git python python-dev python-setuptools nginx sqlite3 supervisor
+RUN apt-get install -y build-essential git python python-dev python-setuptools nginx sqlite3 supervisor
 
 RUN easy_install pip
 RUN pip install uwsgi

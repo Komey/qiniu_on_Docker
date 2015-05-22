@@ -1,4 +1,1 @@
-
-bootstrap-admin==0.3.6
-
 Django==1.8.1
