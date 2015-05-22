@@ -1,4 +1,4 @@
-from ubuntu
+from ubuntu:14.04
 
 maintainer Komey <lmh5257@live.cn>
 
