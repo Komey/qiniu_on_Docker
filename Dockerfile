@@ -23,7 +23,7 @@ RUN ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
 
 RUN pip install -r /home/docker/code/app/requirements.txt
 
-chmod 777 /home/docker/code/run.sh
+RUN chmod 777 /home/docker/code/run.sh
 
 VOLUME ["/home/docker/code/app"]
 EXPOSE 80
