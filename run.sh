@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MODULE=${MODULE:-website}
-
+echo "finding django project (module: ${MODULE})"
 sed -i "s#module=website.wsgi:application#module=${MODULE}.wsgi:application#g" /home/docker/code/uwsgi.ini
 
 if [ ! -f "/home/docker/code/app/manage.py" ]
