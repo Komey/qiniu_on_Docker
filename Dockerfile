@@ -21,5 +21,6 @@ RUN chmod 777 /home/docker/code/*.sh
 
 
 VOLUME ["/home/docker/code/app"]
-EXPOSE [80,22]
+EXPOSE 80
+EXPOSE 22
 CMD ["/home/docker/code/run.sh"]
