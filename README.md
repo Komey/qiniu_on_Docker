@@ -43,4 +43,11 @@ docker run -p 80 -d -e MODULE=myapp -v /home/komey/myapp:/home/docker/code/app i
 
 —————————————————————————————————————————————
 
+可选环境变量：
+
+MODULE = Python应用名（默认为website）
+
+ROOT_PASS = root用户密码（默认随机生成，请查看Log）
+—————————————————————————————————————————————
+
 更多功能 持续更新ing
