@@ -25,8 +25,8 @@ RUN pip install -r /home/docker/code/app/requirements.txt
 
 RUN chmod 777 /home/docker/code/*.sh
 
-RUN ./set_root_pwd.sh
 
 VOLUME ["/home/docker/code/app"]
 EXPOSE 80
+EXPOSE 22
 CMD ["/home/docker/code/run.sh"]
