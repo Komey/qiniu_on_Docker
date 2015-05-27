@@ -1,31 +1,27 @@
-# Django, uWSGI and Nginx in a container
+Django的一个运行容器
+使用Nginx和uWSGI作为运行环境
 
-This Dockerfile allows you to build a Docker container with a fairly standard
-and speedy setup for Django with uWSGI and Nginx.
+概念部分就不过多的赘述了，亲们自行度娘即可
 
-uWSGI from a number of benchmarks has shown to be the fastest server 
-for python applications and allows lots of flexibility.
+——————————————————————————————————————————————————————————————
 
-Nginx has become the standard for serving up web applications and has the 
-additional benefit that it can talk to uWSGI using the uWSGI protocol, further
-elinimating overhead. 
+Dockerfile使用方法：
 
-Most of this setup comes from the excellent tutorial on 
-https://uwsgi.readthedocs.org/en/latest/tutorials/Django_and_nginx.html
+首先请将此Dockerfile clone到本地
+git clone https://github.com/Komey/Django-on-Docker.git
 
-Feel free to clone this and modify it to your liking. And feel free to 
-contribute patches.
+构建本地镜像
+sudo docker build -t komeydjango .
 
-### Build and run
-* docker build -t webapp .
-* docker run -d webapp
+运行容器
+sudo docker run -d komeydjango
 
-### How to insert your application
+——————————————————————————————————————————————————————————————
 
-In /app currently a django project is created with startproject. You will
-probably want to replace the content of /app with the root of your django
-project.
+使用现有代码构建镜像
 
-uWSGI chdirs to /app so in uwsgi.ini you will need to make sure the python path
-to the wsgi.py file is relative to that.
+Ptyhon应用的代码文件，请存放在/app文件夹下，并确保wsgi.py文件在此文件夹下
+
+/app文件夹下默认带有requirements.txt，该文件记录了你的Python应用所须运行库，在构建时会通过PIP安装文件中的依赖
+
 
