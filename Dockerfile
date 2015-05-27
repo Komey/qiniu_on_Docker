@@ -3,23 +3,17 @@ from ubuntu:14.04
 maintainer Komey <lmh5257@live.cn>
 
 
-RUN apt-get update
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y openssh-server pwgen build-essential git python python-dev python-setuptools nginx sqlite3 supervisor openssh-server pwgen
 
-RUN apt-get install -y build-essential git python python-dev python-setuptools nginx sqlite3 supervisor openssh-server pwgen
 
-RUN easy_install pip
-RUN pip install uwsgi
-
+RUN easy_install pip && pip install uwsgi
 
 
 ADD . /home/docker/code/
+RUN mkdir -p /var/run/sshd && sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config && sed -i "s/UsePAM.*/UsePAM no/g" /etc/ssh/sshd_config && sed -i "s/PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config
 
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf && rm /etc/nginx/sites-enabled/default && ln -s /home/docker/code/nginx-app.conf /etc/nginx/sites-enabled/ && ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
 
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf
-
-RUN rm /etc/nginx/sites-enabled/default
-RUN ln -s /home/docker/code/nginx-app.conf /etc/nginx/sites-enabled/
-RUN ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
 
 RUN pip install -r /home/docker/code/app/requirements.txt
 
@@ -27,6 +21,5 @@ RUN chmod 777 /home/docker/code/*.sh
 
 
 VOLUME ["/home/docker/code/app"]
-EXPOSE 80
-EXPOSE 22
+EXPOSE [80,22]
 CMD ["/home/docker/code/run.sh"]
