@@ -9,6 +9,5 @@ then
 	echo "creating basic django project (module: ${MODULE})"
 	django-admin.py startproject ${MODULE} /home/docker/code/app/
 fi
-ls /home/docker/code/app
 
 /usr/bin/supervisord
