@@ -5,7 +5,7 @@ maintainer Komey <lmh5257@live.cn>
 
 RUN apt-get update
 
-RUN apt-get install -y build-essential git python python-dev python-setuptools nginx sqlite3 supervisor
+RUN apt-get install -y build-essential git python python-dev python-setuptools nginx sqlite3 supervisor openssh-server pwgen
 
 RUN easy_install pip
 RUN pip install uwsgi
@@ -23,7 +23,9 @@ RUN ln -s /home/docker/code/supervisor-app.conf /etc/supervisor/conf.d/
 
 RUN pip install -r /home/docker/code/app/requirements.txt
 
-RUN chmod 777 /home/docker/code/run.sh
+RUN chmod 777 /home/docker/code/*.sh
+
+RUN ./set_root_pwd.sh
 
 VOLUME ["/home/docker/code/app"]
 EXPOSE 80
