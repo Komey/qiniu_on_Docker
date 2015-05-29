@@ -18,4 +18,4 @@ then
 fi
 
 /usr/bin/supervisord
-/usr/sbin/sshd
+exec /usr/sbin/sshd -D
