@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
-from django.shortcuts import render
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 from django.http import HttpResponse
 import qiniu,json
+
 
 AK='<Here is qiniu AccessKey>'
 SK='<Here is qiniu SecretKey>'
@@ -39,7 +42,6 @@ def listBucket(request):
             ret, eof, info = bucket.list(bucket_name)
             print type(ret)
             data = json.dumps(ret,ensure_ascii=False)
-            print data
             return HttpResponse(data)
 
 
