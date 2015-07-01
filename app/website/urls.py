@@ -7,6 +7,8 @@ urlpatterns = [
     # url(r'^$', 'website.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^admin/', include(admin.site.urls)),
     url(r'^$', hello.views.index, name='index'),
+    url(r'^uploadtoken', hello.views.uploadToken, name='uploadToken'),
+    url(r'^listbucket', hello.views.listBucket, name='listBucket'),
 ]
