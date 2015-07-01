@@ -5,7 +5,6 @@ MAINTAINER Komey <lmh5257@live.cn>
 ADD . /home/docker/code/ 
 
 
-
 RUN pip install -r /home/docker/code/app/requirements.txt && chmod +x /home/docker/code/*.sh
 
 VOLUME ["/home/docker/code/app"]
